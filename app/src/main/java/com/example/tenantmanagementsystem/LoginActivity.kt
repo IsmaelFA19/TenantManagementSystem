@@ -1,8 +1,5 @@
 package com.example.tenantmanagementsystem
 
-
-
-
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -19,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Step 8: read the email sent from RegisterActivity (null if app opened normally)
+        // Read the email sent from RegisterActivity (null if app opened normally)
         val registeredEmail = intent.getStringExtra("EMAIL")
         if (registeredEmail != null) {
             binding.emailEditText.setText(registeredEmail)
@@ -34,18 +31,20 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Explicit Intent: Login -> MainActivity, carrying the email
             val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("EMAIL", email)
             startActivity(intent)
             finish()
         }
 
-        // Step 8: explicit Intent to the Register screen
+        // Explicit Intent: Login -> RegisterActivity
         binding.registerTextView.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
-        // Step 10: implicit Intent to open a website
+        // Implicit Intent: open a website
         binding.helpTextView.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.strathmore.edu"))
             startActivity(intent)
